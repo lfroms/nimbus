@@ -1,0 +1,52 @@
+inherit_from:
+  - http://shopify.github.io/ruby-style-guide/rubocop.yml
+
+require:
+  - rubocop-rails
+
+AllCops:
+  TargetRubyVersion: 2.6.3
+  Include:
+    - "**/*.rb"
+    - "**/*.gemfile"
+    - "**/*.gemspec"
+    - "**/*.rake"
+    - "**/*.ru"
+    - "**/*.ruby"
+    - "**/*.spec"
+    - "**/*.thor"
+    - "**/.irbrc"
+    - "**/.pryrc"
+    - "**/Gemfile"
+    - "**/Rakefile"
+  Exclude:
+    - ".git/**/*"
+    - "bin/*"
+    - "db/**/*"
+    - "node_modules/**/*"
+    - "tmp/**/*"
+    - "vendor/**/*"
+
+Layout/EmptyLineAfterMagicComment:
+  Enabled: false
+
+Rails:
+  Enabled: true
+
+Style/Documentation:
+  Enabled: false
+
+Style/StringLiterals:
+  Enabled: true
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
+
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
