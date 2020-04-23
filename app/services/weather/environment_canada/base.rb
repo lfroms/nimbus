@@ -63,7 +63,10 @@ module Weather
 
       def server_data
         nearest_site = CanadaSite.near(coordinate.to_a).first
-        @station_coordinate = nearest_site.to_coordinates
+
+        return nil if nearest_site.nil?
+
+        @station_coordinate = nearest_site.coordinate
 
         citypage_uri = Helpers::CitypageWeatherUrl.new(site_code: nearest_site.code, province: nearest_site.province).to_uri
 

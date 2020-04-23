@@ -20,4 +20,9 @@ class CanadaSite < ApplicationRecord
   def self.geocoder_options
     { latitude: :latitude, longitude: :longitude }
   end
+
+  def coordinate
+    latitude, longitude = to_coordinates
+    Weather::Types::Coordinate.new(latitude: latitude, longitude: longitude)
+  end
 end
