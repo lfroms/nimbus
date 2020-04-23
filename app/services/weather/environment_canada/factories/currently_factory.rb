@@ -12,15 +12,15 @@ module Weather
         def create
           Types::Currently.new(
             time: time,
-            summary: @current_conditions.xpath('condition').first&.content&.presence,
-            icon: @current_conditions.xpath('iconCode').first&.content&.presence,
-            temperature: @current_conditions.xpath('temperature').first&.content&.presence,
+            summary: @current_conditions&.xpath('condition')&.first&.content&.presence,
+            icon: @current_conditions&.xpath('iconCode')&.first&.content&.presence,
+            temperature: @current_conditions&.xpath('temperature')&.first&.content&.presence,
             feels_like: feels_like,
             wind: wind,
-            dew_point: @current_conditions.xpath('dewpoint').first&.content&.presence,
-            humidity: @current_conditions.xpath('relativeHumidity').first&.content&.presence&.to_i&.to_decimal_percent,
+            dew_point: @current_conditions&.xpath('dewpoint')&.first&.content&.presence,
+            humidity: @current_conditions&.xpath('relativeHumidity')&.first&.content&.presence&.to_i&.to_decimal_percent,
             pressure: pressure,
-            visibility: @current_conditions.xpath('visibility').first&.content&.presence,
+            visibility: @current_conditions&.xpath('visibility')&.first&.content&.presence,
             uv_index: nil
           )
         end
