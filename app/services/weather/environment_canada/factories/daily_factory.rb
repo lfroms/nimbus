@@ -30,7 +30,7 @@ module Weather
         private
 
         def forecasts
-          @forecast_group.xpath('forecast').to_a
+          @forecast_group&.xpath('forecast')&.to_a
         end
 
         def forecast_issue_date

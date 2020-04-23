@@ -10,7 +10,8 @@ module Weather
         end
 
         def create
-          warning_events = @warnings.xpath('event')
+          return [] if warnings.nil?
+          warning_events = warnings.xpath('event')
 
           warning_events.map do |event|
             Types::Alert.new(

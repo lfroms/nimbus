@@ -11,7 +11,7 @@ module Weather
 
         def create
           Types::Currently.new(
-            time: time,
+            time: time || Time.zone.now.to_i,
             summary: @current_conditions&.xpath('condition')&.first&.content&.presence,
             icon: @current_conditions&.xpath('iconCode')&.first&.content&.presence,
             temperature: @current_conditions&.xpath('temperature')&.first&.content&.presence,
@@ -28,7 +28,7 @@ module Weather
         private
 
         def time
-          @current_conditions.xpath("dateTime[@name='observation' and @zone='UTC']/timeStamp").first&.content&.to_unix
+          @current_conditions&.xpath("dateTime[@name='observation' and @zone='UTC']/timeStamp")&.first&.content&.to_unix
         end
 
         def feels_like
