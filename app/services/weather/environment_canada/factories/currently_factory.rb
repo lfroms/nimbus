@@ -12,15 +12,15 @@ module Weather
         def create
           Types::Currently.new(
             time: time,
-            summary: @current_conditions.xpath('//condition').first&.content,
-            icon: @current_conditions.xpath('//iconCode').first&.content,
-            temperature: @current_conditions.xpath('//temperature').first&.content,
+            summary: @current_conditions.xpath('condition').first&.content,
+            icon: @current_conditions.xpath('iconCode').first&.content,
+            temperature: @current_conditions.xpath('temperature').first&.content,
             feels_like: feels_like,
             wind: wind,
-            dew_point: @current_conditions.xpath('//dewpoint').first&.content,
-            humidity: @current_conditions.xpath('//relativeHumidity').first&.content&.to_i&.to_decimal_percent,
+            dew_point: @current_conditions.xpath('dewpoint').first&.content,
+            humidity: @current_conditions.xpath('relativeHumidity').first&.content&.to_i&.to_decimal_percent,
             pressure: pressure,
-            visibility: @current_conditions.xpath('//visibility').first&.content,
+            visibility: @current_conditions.xpath('visibility').first&.content,
             uv_index: nil
           )
         end
@@ -28,12 +28,12 @@ module Weather
         private
 
         def time
-          @current_conditions.xpath("//dateTime[@name='observation' and @zone='UTC']/timeStamp").first&.content&.to_unix
+          @current_conditions.xpath("dateTime[@name='observation' and @zone='UTC']/timeStamp").first&.content&.to_unix
         end
 
         def feels_like
-          humidex = @current_conditions&.xpath('//humidex')&.first&.content
-          wind_chill = @current_conditions&.xpath('//windChill')&.first&.content
+          humidex = @current_conditions&.xpath('humidex')&.first&.content
+          wind_chill = @current_conditions&.xpath('windChill')&.first&.content
 
           if humidex.present?
             Types::FeelsLike.new(temperature: humidex, type: Types::FeelsLikeType::HUMIDEX)
@@ -45,18 +45,18 @@ module Weather
         end
 
         def wind
-          wind_node = @current_conditions&.xpath('//wind')&.first
+          wind_node = @current_conditions&.xpath('wind')&.first
 
           Types::Wind.new(
-            speed: wind_node&.xpath('//speed')&.first&.content,
-            gust: wind_node&.xpath('//gust')&.first&.content,
-            direction: wind_node&.xpath('//direction')&.first&.content,
-            bearing: wind_node&.xpath('//bearing')&.first&.content
+            speed: wind_node&.xpath('speed')&.first&.content,
+            gust: wind_node&.xpath('gust')&.first&.content,
+            direction: wind_node&.xpath('direction')&.first&.content,
+            bearing: wind_node&.xpath('bearing')&.first&.content
           )
         end
 
         def pressure
-          pressure_node = @current_conditions&.xpath('//pressure')&.first
+          pressure_node = @current_conditions&.xpath('pressure')&.first
 
           Types::Pressure.new(
             value: pressure_node&.content,
@@ -66,7 +66,7 @@ module Weather
         end
 
         def tendency(pressure_node)
-          tendency = pressure_node&.xpath('//tendency')&.first&.content
+          tendency = pressure_node&.get_attribute('tendency')
 
           return nil if tendency.nil?
 

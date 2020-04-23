@@ -12,14 +12,14 @@ module Weather
         def create
           return [] if @hourly_forecast_group.nil?
 
-          @hourly_forecast_group.xpath('//hourlyForecast').map do |forecast|
+          @hourly_forecast_group.xpath('hourlyForecast').map do |forecast|
             Types::Hourly.new(
-              time: forecast.xpath('//dateTimeUTC').first&.content&.to_unix,
-              summary: forecast.xpath('//condition').first&.content,
-              icon: forecast.xpath('//iconCode').first&.content,
-              temperature: forecast.xpath('//temperature').first&.content,
+              time: forecast.get_attribute('dateTimeUTC')&.to_unix,
+              summary: forecast.xpath('condition').first&.content,
+              icon: forecast.xpath('iconCode').first&.content,
+              temperature: forecast.xpath('temperature').first&.content,
               feels_like: feels_like(item: forecast),
-              precip_probability: forecast.xpath('//lop').first&.content&.to_i&.to_decimal_percent,
+              precip_probability: forecast.xpath('lop').first&.content&.to_i&.to_decimal_percent,
               wind: wind(item: forecast)
             )
           end
@@ -28,8 +28,8 @@ module Weather
         private
 
         def feels_like(item:)
-          humidex = item.xpath('//humidex').first&.content
-          wind_chill = item.xpath('//windChill').first&.content
+          humidex = item.xpath('humidex').first&.content
+          wind_chill = item.xpath('windChill').first&.content
 
           if humidex.present?
             Types::FeelsLike.new(temperature: humidex, type: Types::FeelsLikeType::HUMIDEX)
@@ -41,13 +41,13 @@ module Weather
         end
 
         def wind(item:)
-          wind_node = item.xpath('//wind').first
+          wind_node = item.xpath('wind').first
 
           Types::Wind.new(
-            speed: wind_node&.xpath('//speed')&.first&.content,
-            gust: wind_node&.xpath('//gust')&.first&.content,
-            direction: wind_node&.xpath('//direction')&.first&.content,
-            bearing: wind_node&.xpath('//bearing')&.first&.content
+            speed: wind_node&.xpath('speed')&.first&.content,
+            gust: wind_node&.xpath('gust')&.first&.content,
+            direction: wind_node&.xpath('direction')&.first&.content,
+            bearing: wind_node&.xpath('bearing')&.first&.content
           )
         end
       end

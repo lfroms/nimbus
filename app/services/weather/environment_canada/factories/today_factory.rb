@@ -12,29 +12,29 @@ module Weather
 
         def create
           Types::Today.new(
-            high_temperature: today&.xpath('//temperature')&.first&.content,
-            low_temperature: tonight&.xpath('//temperature')&.first&.content,
-            sunrise_time: sunrise_date&.xpath('//timeStamp')&.first&.content&.to_unix,
-            sunset_time: sunset_date&.xpath('//timeStamp')&.first&.content&.to_unix,
+            high_temperature: today&.xpath('temperatures/temperature')&.first&.content,
+            low_temperature: tonight&.xpath('temperatures/temperature')&.first&.content,
+            sunrise_time: sunrise_date&.xpath('timeStamp')&.first&.content&.to_unix,
+            sunset_time: sunset_date&.xpath('timeStamp')&.first&.content&.to_unix,
           )
         end
 
         private
 
         def today
-          @forecast_group&.xpath("//forecast[period/@textForecastName='Today']")
+          @forecast_group&.xpath("forecast[period/@textForecastName='Today']")
         end
 
         def tonight
-          @forecast_group&.xpath("//forecast[period/@textForecastName='Tonight']")
+          @forecast_group&.xpath("forecast[period/@textForecastName='Tonight']")
         end
 
         def sunrise_date
-          @rise_set&.xpath("//dateTime[@name='sunrise' and @zone='UTC']")
+          @rise_set&.xpath("dateTime[@name='sunrise' and @zone='UTC']")
         end
 
         def sunset_date
-          @rise_set&.xpath("//dateTime[@name='sunset' and @zone='UTC']")
+          @rise_set&.xpath("dateTime[@name='sunset' and @zone='UTC']")
         end
       end
     end

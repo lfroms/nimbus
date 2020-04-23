@@ -17,12 +17,12 @@ module Weather
           input.unshift(nil) if night?(input.first)
 
           input.each_slice(2).each_with_index.map do |pair, index|
-            first, second = pair
+            day, night = pair
 
             Types::Daily.new(
               time: time(index: index),
-              daytime_conditions: half_day_condition(forecast: first),
-              nighttime_conditions: half_day_condition(forecast: second)
+              daytime_conditions: half_day_condition(forecast: day),
+              nighttime_conditions: half_day_condition(forecast: night)
             )
           end
         end
@@ -30,11 +30,11 @@ module Weather
         private
 
         def forecasts
-          @forecast_group.xpath('//forecast').to_a
+          @forecast_group.xpath('forecast').to_a
         end
 
         def forecast_issue_date
-          @forecast_group.xpath("//dateTime[@name='forecastIssue' and @zone='UTC']").first&.content&.to_date
+          @forecast_group.xpath("dateTime[@name='forecastIssue' and @zone='UTC']/timeStamp").first&.content&.to_date
         end
 
         def time(index:)
@@ -51,21 +51,21 @@ module Weather
           return nil if forecast.nil?
 
           Types::HalfDayCondition.new(
-            summary_extended: forecast.xpath('//textSummary').first&.content,
-            summary_clouds: forecast.xpath('//cloudPrecip/textSummary').first&.content,
-            summary: forecast.xpath('//abbreviatedForecast/textSummary').first&.content,
-            icon: forecast.xpath('//abbreviatedForecast/iconCode').first&.content,
-            temperature: forecast.xpath('//temperatures/temperature').first&.content,
-            humidity: forecast.xpath('//relativeHumidity').first&.content&.to_i&.to_decimal_percent,
+            summary_extended: forecast.xpath('textSummary').first&.content,
+            summary_clouds: forecast.xpath('cloudPrecip/textSummary').first&.content,
+            summary: forecast.xpath('abbreviatedForecast/textSummary').first&.content,
+            icon: forecast.xpath('abbreviatedForecast/iconCode').first&.content,
+            temperature: forecast.xpath('temperatures/temperature').first&.content,
+            humidity: forecast.xpath('relativeHumidity').first&.content&.to_i&.to_decimal_percent,
             feels_like: feels_like(item: forecast),
-            precip_probability: forecast.xpath('//abbreviatedForecast/pop').first&.content&.to_i&.to_decimal_percent,
+            precip_probability: forecast.xpath('abbreviatedForecast/pop').first&.content&.to_i&.to_decimal_percent,
             wind: wind(item: forecast)
           )
         end
 
         def feels_like(item:)
-          humidex = item.xpath('//humidex/calculated').first&.content
-          wind_chill = item.xpath('//windChill/calculated').first&.content
+          humidex = item.xpath('humidex/calculated').first&.content
+          wind_chill = item.xpath('windChill/calculated').first&.content
 
           if humidex.present?
             Types::FeelsLike.new(temperature: humidex, type: Types::FeelsLikeType::HUMIDEX)
@@ -77,18 +77,18 @@ module Weather
         end
 
         def wind(item:)
-          wind_node = item.xpath('//winds/wind').first
+          wind_node = item.xpath('winds/wind').first
 
           Types::Wind.new(
-            speed: wind_node&.xpath('//speed')&.first&.content,
-            gust: wind_node&.xpath('//gust')&.first&.content,
-            direction: wind_node&.xpath('//direction')&.first&.content,
-            bearing: wind_node&.xpath('//bearing')&.first&.content
+            speed: wind_node&.xpath('speed')&.first&.content,
+            gust: wind_node&.xpath('gust')&.first&.content,
+            direction: wind_node&.xpath('direction')&.first&.content,
+            bearing: wind_node&.xpath('bearing')&.first&.content
           )
         end
 
         def night?(forecast)
-          forecast.xpath("//period[contains(text(), 'night')]").present?
+          forecast.xpath("period[contains(text(), 'night')]").present?
         end
       end
     end
