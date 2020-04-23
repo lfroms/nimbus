@@ -15,16 +15,16 @@ module Weather
           warning_events.map do |event|
             Types::Alert.new(
               title: event.get_attribute('description')&.titlecase&.strip || 'Alert',
-              time: event.xpath("dateTime[@name='eventIssue' and @zone='UTC']").first&.content&.to_unix,
+              time: event.xpath("dateTime[@name='eventIssue' and @zone='UTC']/timeStamp").first&.content&.to_unix,
               type: event_type(event: event),
-              uri: uri
+              url: url
             )
           end
         end
 
         private
 
-        def uri
+        def url
           @warnings&.first&.get_attribute('url') || 'https://weather.gc.ca'
         end
 

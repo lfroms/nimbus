@@ -2,13 +2,13 @@
 module Weather
   module Types
     class Alert
-      attr_reader :title, :time, :type, :uri
+      attr_reader :title, :time, :type, :url
 
-      def initialize(title:, time:, type:, uri:)
+      def initialize(title:, time:, type:, url:)
         @title = title
         @time = time
         @type = type
-        @uri = uri
+        @url = url
       end
     end
   end
