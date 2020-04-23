@@ -56,9 +56,9 @@ module Weather
             summary: forecast.xpath('//abbreviatedForecast/textSummary').first&.content,
             icon: forecast.xpath('//abbreviatedForecast/iconCode').first&.content,
             temperature: forecast.xpath('//temperatures/temperature').first&.content,
-            humidity: forecast.xpath('//relativeHumidity').first&.content,
+            humidity: forecast.xpath('//relativeHumidity').first&.content&.to_i&.to_decimal_percent,
             feels_like: feels_like(item: forecast),
-            precip_probability: forecast.xpath('//abbreviatedForecast/pop').first&.content,
+            precip_probability: forecast.xpath('//abbreviatedForecast/pop').first&.content&.to_i&.to_decimal_percent,
             wind: wind(item: forecast)
           )
         end

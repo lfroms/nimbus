@@ -18,7 +18,7 @@ module Weather
             feels_like: feels_like,
             wind: wind,
             dew_point: @current_conditions.xpath('//dewpoint').first&.content,
-            humidity: @current_conditions.xpath('//relativeHumidity').first&.content,
+            humidity: @current_conditions.xpath('//relativeHumidity').first&.content&.to_i&.to_decimal_percent,
             pressure: pressure,
             visibility: @current_conditions.xpath('//visibility').first&.content,
             uv_index: nil

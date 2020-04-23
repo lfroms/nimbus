@@ -19,7 +19,7 @@ module Weather
               icon: forecast.xpath('//iconCode').first&.content,
               temperature: forecast.xpath('//temperature').first&.content,
               feels_like: feels_like(item: forecast),
-              precip_probability: forecast.xpath('//lop').first&.content,
+              precip_probability: forecast.xpath('//lop').first&.content&.to_i&.to_decimal_percent,
               wind: wind(item: forecast)
             )
           end
