@@ -15,14 +15,15 @@ ActiveRecord::Schema.define(version: 2020_04_23_162539) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "canada_sites", force: :cascade do |t|
+  create_table "canada_sites", id: false, force: :cascade do |t|
     t.string "name"
-    t.string "code"
-    t.string "province"
-    t.float "latitude"
-    t.float "longitude"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.string "code", null: false
+    t.string "province", null: false
+    t.float "latitude", null: false
+    t.float "longitude", null: false
+    t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.index ["code"], name: "index_canada_sites_on_code", unique: true
   end
 
 end
