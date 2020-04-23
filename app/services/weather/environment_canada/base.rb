@@ -62,10 +62,10 @@ module Weather
       end
 
       def server_data
-        nearest_site = Helpers::NearestSite.to(coordinate: coordinate, rank: 0)
-        @station_coordinate = nearest_site.coordinate
+        nearest_site = CanadaSite.near(coordinate.to_a).first
+        @station_coordinate = nearest_site.to_coordinates
 
-        citypage_uri = Helpers::CitypageWeatherUrl.new(site_code: nearest_site.site_code, province: nearest_site.province).to_uri
+        citypage_uri = Helpers::CitypageWeatherUrl.new(site_code: nearest_site.code, province: nearest_site.province).to_uri
 
         Typhoeus.get(citypage_uri.to_s, followlocation: true).body
       end
