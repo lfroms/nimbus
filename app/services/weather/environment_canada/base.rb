@@ -63,9 +63,9 @@ module Weather
 
       def server_data
         nearest_site = Helpers::NearestSite.to(coordinate: coordinate, rank: 0)
-        @station_coordinate = Types::Coordinate.new(latitude: nearest_site['Latitude'], longitude: nearest_site['Longitude'])
+        @station_coordinate = nearest_site.coordinate
 
-        citypage_uri = Helpers::CitypageWeatherUrl.new(site_code: nearest_site['Codes'], province: nearest_site['Province Codes']).to_uri
+        citypage_uri = Helpers::CitypageWeatherUrl.new(site_code: nearest_site.site_code, province: nearest_site.province).to_uri
 
         Typhoeus.get(citypage_uri.to_s, followlocation: true).body
       end
