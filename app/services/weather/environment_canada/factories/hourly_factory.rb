@@ -14,18 +14,22 @@ module Weather
 
           @hourly_forecast_group.xpath('hourlyForecast').map do |forecast|
             Types::Hourly.new(
-              time: forecast.get_attribute('dateTimeUTC')&.to_unix,
+              time: time(item: forecast),
               summary: forecast.xpath('condition').first&.content&.presence,
               icon: forecast.xpath('iconCode').first&.content&.presence,
               temperature: forecast.xpath('temperature').first&.content&.presence,
               feels_like: feels_like(item: forecast),
-              precip_probability: forecast.xpath('lop').first&.content&.presence&.to_i&.to_decimal_percent,
+              precip_probability: forecast.xpath('lop').first&.content&.presence&.to_i&.to_percent,
               wind: wind(item: forecast)
             )
           end
         end
 
         private
+
+        def time(item:)
+          Time.strptime(item.get_attribute('dateTimeUTC'), '%Y%m%d%H%M').to_i
+        end
 
         def feels_like(item:)
           humidex = item.xpath('humidex').first&.content&.presence
