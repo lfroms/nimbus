@@ -15,11 +15,11 @@ module Weather
           @hourly_forecast_group.xpath('hourlyForecast').map do |forecast|
             Types::Hourly.new(
               time: forecast.get_attribute('dateTimeUTC')&.to_unix,
-              summary: forecast.xpath('condition').first&.content,
-              icon: forecast.xpath('iconCode').first&.content,
-              temperature: forecast.xpath('temperature').first&.content,
+              summary: forecast.xpath('condition').first&.content&.presence,
+              icon: forecast.xpath('iconCode').first&.content&.presence,
+              temperature: forecast.xpath('temperature').first&.content&.presence,
               feels_like: feels_like(item: forecast),
-              precip_probability: forecast.xpath('lop').first&.content&.to_i&.to_decimal_percent,
+              precip_probability: forecast.xpath('lop').first&.content&.presence&.to_i&.to_decimal_percent,
               wind: wind(item: forecast)
             )
           end
@@ -28,8 +28,8 @@ module Weather
         private
 
         def feels_like(item:)
-          humidex = item.xpath('humidex').first&.content
-          wind_chill = item.xpath('windChill').first&.content
+          humidex = item.xpath('humidex').first&.content&.presence
+          wind_chill = item.xpath('windChill').first&.content&.presence
 
           if humidex.present?
             Types::FeelsLike.new(temperature: humidex, type: Types::FeelsLikeType::HUMIDEX)
@@ -44,10 +44,10 @@ module Weather
           wind_node = item.xpath('wind').first
 
           Types::Wind.new(
-            speed: wind_node&.xpath('speed')&.first&.content,
-            gust: wind_node&.xpath('gust')&.first&.content,
-            direction: wind_node&.xpath('direction')&.first&.content,
-            bearing: wind_node&.xpath('bearing')&.first&.content
+            speed: wind_node&.xpath('speed')&.first&.content&.presence,
+            gust: wind_node&.xpath('gust')&.first&.content&.presence,
+            direction: wind_node&.xpath('direction')&.first&.content&.presence,
+            bearing: wind_node&.xpath('bearing')&.first&.content&.presence
           )
         end
       end

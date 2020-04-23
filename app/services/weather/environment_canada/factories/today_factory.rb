@@ -12,10 +12,10 @@ module Weather
 
         def create
           Types::Today.new(
-            high_temperature: today&.xpath('temperatures/temperature')&.first&.content,
-            low_temperature: tonight&.xpath('temperatures/temperature')&.first&.content,
-            sunrise_time: sunrise_date&.xpath('timeStamp')&.first&.content&.to_unix,
-            sunset_time: sunset_date&.xpath('timeStamp')&.first&.content&.to_unix,
+            high_temperature: today&.xpath('temperatures/temperature')&.first&.content&.presence,
+            low_temperature: tonight&.xpath('temperatures/temperature')&.first&.content&.presence,
+            sunrise_time: sunrise_date&.xpath('timeStamp')&.first&.content&.presence&.to_unix,
+            sunset_time: sunset_date&.xpath('timeStamp')&.first&.content&.presence&.to_unix,
           )
         end
 

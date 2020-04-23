@@ -51,21 +51,21 @@ module Weather
           return nil if forecast.nil?
 
           Types::HalfDayCondition.new(
-            summary_extended: forecast.xpath('textSummary').first&.content,
-            summary_clouds: forecast.xpath('cloudPrecip/textSummary').first&.content,
-            summary: forecast.xpath('abbreviatedForecast/textSummary').first&.content,
-            icon: forecast.xpath('abbreviatedForecast/iconCode').first&.content,
-            temperature: forecast.xpath('temperatures/temperature').first&.content,
-            humidity: forecast.xpath('relativeHumidity').first&.content&.to_i&.to_decimal_percent,
+            summary_extended: forecast.xpath('textSummary').first&.content&.presence,
+            summary_clouds: forecast.xpath('cloudPrecip/textSummary').first&.content&.presence,
+            summary: forecast.xpath('abbreviatedForecast/textSummary').first&.content&.presence,
+            icon: forecast.xpath('abbreviatedForecast/iconCode').first&.content&.presence,
+            temperature: forecast.xpath('temperatures/temperature').first&.content&.presence,
+            humidity: forecast.xpath('relativeHumidity').first&.content&.presence&.to_i&.to_decimal_percent,
             feels_like: feels_like(item: forecast),
-            precip_probability: forecast.xpath('abbreviatedForecast/pop').first&.content&.to_i&.to_decimal_percent,
+            precip_probability: forecast.xpath('abbreviatedForecast/pop').first&.content&.presence&.to_i&.to_decimal_percent,
             wind: wind(item: forecast)
           )
         end
 
         def feels_like(item:)
-          humidex = item.xpath('humidex/calculated').first&.content
-          wind_chill = item.xpath('windChill/calculated').first&.content
+          humidex = item.xpath('humidex/calculated').first&.content&.presence
+          wind_chill = item.xpath('windChill/calculated').first&.content&.presence
 
           if humidex.present?
             Types::FeelsLike.new(temperature: humidex, type: Types::FeelsLikeType::HUMIDEX)
@@ -80,10 +80,10 @@ module Weather
           wind_node = item.xpath('winds/wind').first
 
           Types::Wind.new(
-            speed: wind_node&.xpath('speed')&.first&.content,
-            gust: wind_node&.xpath('gust')&.first&.content,
-            direction: wind_node&.xpath('direction')&.first&.content,
-            bearing: wind_node&.xpath('bearing')&.first&.content
+            speed: wind_node&.xpath('speed')&.first&.content&.presence,
+            gust: wind_node&.xpath('gust')&.first&.content&.presence,
+            direction: wind_node&.xpath('direction')&.first&.content&.presence,
+            bearing: wind_node&.xpath('bearing')&.first&.content&.presence
           )
         end
 
