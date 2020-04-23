@@ -2,10 +2,12 @@
 module Weather
   module EnvironmentCanada
     class Base < Weather::Base
-      attr :coordinate, :user_coordinate
+      attr :province, :site_code, :station_coordinate, :user_coordinate
 
-      def initialize(coordinate:, user_coordinate:)
-        @coordinate = coordinate
+      def initialize(province:, site_code:, station_coordinate:, user_coordinate:)
+        @province = province
+        @site_code = site_code
+        @station_coordinate = station_coordinate
         @user_coordinate = user_coordinate
       end
 
@@ -13,7 +15,7 @@ module Weather
         factory = Factories::LocationFactory.new(
           location: data.xpath('//location'),
            current_conditions: data.xpath('//currentConditions'),
-           station_coordinate: @coordinate,
+           station_coordinate: @station_coordinate,
            user_coordinate: @user_coordinate
         )
 
@@ -64,9 +66,13 @@ module Weather
       private
 
       def data
-        uri = URI('https://dd.weather.gc.ca/citypage_weather/xml/ON/s0000430_e.xml')
+        @data ||= Nokogiri::XML(server_data)
+      end
 
-        @data ||= Nokogiri::XML(Net::HTTP.get(uri))
+      def server_data
+        citypage_uri = Helpers::CitypageWeatherUrl.new(site_code: site_code, province: province).to_uri
+
+        Typhoeus.get(citypage_uri.to_s, followlocation: true).body
       end
     end
   end

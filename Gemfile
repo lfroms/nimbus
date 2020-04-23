@@ -44,3 +44,4 @@ gem 'graphql', '~> 1.10'
 
 gem 'nokogiri', '~> 1.10'
 gem 'rgeo', '~> 2.1'
+gem 'typhoeus', '~> 1.3'
