@@ -4,6 +4,8 @@ require 'geocoder/stores/active_record'
 class CanadaSite < ApplicationRecord
   include Geocoder::Store::ActiveRecord
 
+  # This attribute is only to be used when using the model to validate
+  # a set of input parameters, typically when doing #upsert_all.
   attr_accessor :skip_uniqueness
 
   self.primary_key = :code
