@@ -28,7 +28,7 @@ module Weather
         private
 
         def time
-          @current_conditions.xpath("//dateTime[@name='observation' and @zone='UTC']").first&.content&.to_unix
+          @current_conditions.xpath("//dateTime[@name='observation' and @zone='UTC']/timeStamp").first&.content&.to_unix
         end
 
         def feels_like
