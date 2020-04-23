@@ -34,6 +34,7 @@ group :development do
   gem 'rubocop', '~> 0.82.0'
   gem 'rubocop-rails', '~> 2.5'
   gem 'solargraph', '~> 0.38.6'
+  gem 'pry-rails', '~> 0.3.9'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -43,5 +44,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'graphql', '~> 1.10'
 
 gem 'nokogiri', '~> 1.10'
-gem 'rgeo', '~> 2.1'
 gem 'typhoeus', '~> 1.3'
+gem 'geocoder', '~> 1.6'
+gem 'rgeo-geojson', '~> 2.1'

@@ -16,12 +16,8 @@ module Weather
 
         private
 
-        def padded_site_code
-          site_code.to_s.rjust(7, '0')
-        end
-
         def filename
-          "s#{padded_site_code}_e.xml"
+          "#{site_code}_e.xml"
         end
       end
     end

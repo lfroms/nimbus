@@ -8,6 +8,10 @@ module Weather
         @latitude = latitude
         @longitude = longitude
       end
+
+      def to_a
+        [latitude, longitude]
+      end
     end
   end
 end

@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 module Weather
   class Base
+    attr_reader :coordinate
+
+    def initialize(coordinate:)
+      @coordinate = coordinate
+    end
+
     def location
       raise NotImplementedError, 'This method must be implemented by the child class.'
     end
@@ -22,6 +28,12 @@ module Weather
     end
 
     def alerts
+      raise NotImplementedError, 'This method must be implemented by the child class.'
+    end
+
+    protected
+
+    def data
       raise NotImplementedError, 'This method must be implemented by the child class.'
     end
   end
