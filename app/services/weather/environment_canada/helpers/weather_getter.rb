@@ -32,7 +32,7 @@ module Weather
         private
 
         def fetch_data(url)
-          response = Typhoeus.get(url, followlocation: true).body
+          response = Typhoeus.get(url, followlocation: true, cache_ttl: 120).body
           Nokogiri::XML(response)
         rescue
           # Return a blank XML document
