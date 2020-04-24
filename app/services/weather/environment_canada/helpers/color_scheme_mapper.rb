@@ -4,7 +4,9 @@ module Weather
     module Helpers
       class ColorSchemeMapper
         def self.color_scheme(code:)
-          SCHEME_MAPPING[code] || SCHEME_MAPPING[0]
+          return Types::ColorScheme::EMPTY if code.nil?
+
+          SCHEME_MAPPING[code.to_i] || Types::ColorScheme::EMPTY
         end
 
         SCHEME_MAPPING = {

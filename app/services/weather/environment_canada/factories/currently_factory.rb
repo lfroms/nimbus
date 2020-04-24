@@ -13,7 +13,7 @@ module Weather
           Types::Currently.new(
             time: time,
             summary: current_conditions.xpath('condition')&.first&.content&.presence,
-            icon: current_conditions.xpath('iconCode')&.first&.content&.presence,
+            icon: icon,
             temperature: current_conditions.xpath('temperature')&.first&.content&.presence,
             feels_like: feels_like,
             wind: wind,
@@ -33,6 +33,11 @@ module Weather
           return Time.zone.now.to_i if content.nil?
 
           Time.strptime(content, '%Y%m%d%H%M%S').to_i
+        end
+
+        def icon
+          code = current_conditions.xpath('iconCode')&.first&.content&.presence
+          IconFactory.new(code: code).create
         end
 
         def feels_like

@@ -16,7 +16,7 @@ module Weather
             Types::Hourly.new(
               time: time(item: forecast),
               summary: forecast.xpath('condition').first&.content&.presence,
-              icon: forecast.xpath('iconCode').first&.content&.presence,
+              icon: icon(item: forecast),
               temperature: forecast.xpath('temperature').first&.content&.presence,
               feels_like: feels_like(item: forecast),
               precip_probability: forecast.xpath('lop').first&.content&.presence&.to_i&.to_percent,
@@ -29,6 +29,11 @@ module Weather
 
         def time(item:)
           Time.strptime(item.get_attribute('dateTimeUTC'), '%Y%m%d%H%M').to_i
+        end
+
+        def icon(item:)
+          code = item.xpath('iconCode').first&.content&.presence
+          IconFactory.new(code: code).create
         end
 
         def feels_like(item:)

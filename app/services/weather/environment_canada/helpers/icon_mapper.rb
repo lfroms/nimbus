@@ -4,7 +4,9 @@ module Weather
     module Helpers
       class IconMapper
         def self.icon(code:)
-          ICON_MAPPING[code] || ICON_MAPPING[0]
+          return nil if code.nil?
+
+          ICON_MAPPING[code.to_i]
         end
 
         ICON_MAPPING = {

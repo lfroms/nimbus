@@ -54,13 +54,18 @@ module Weather
             summary_extended: forecast.xpath('textSummary').first&.content&.presence,
             summary_clouds: forecast.xpath('cloudPrecip/textSummary').first&.content&.presence,
             summary: forecast.xpath('abbreviatedForecast/textSummary').first&.content&.presence,
-            icon: forecast.xpath('abbreviatedForecast/iconCode').first&.content&.presence,
+            icon: icon(item: forecast),
             temperature: forecast.xpath('temperatures/temperature').first&.content&.presence,
             humidity: forecast.xpath('relativeHumidity').first&.content&.presence&.to_i&.to_percent,
             feels_like: feels_like(item: forecast),
             precip_probability: forecast.xpath('abbreviatedForecast/pop').first&.content&.presence&.to_i&.to_percent,
             wind: wind(item: forecast)
           )
+        end
+
+        def icon(item:)
+          code = item.xpath('abbreviatedForecast/iconCode').first&.content&.presence
+          IconFactory.new(code: code).create
         end
 
         def feels_like(item:)
