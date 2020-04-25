@@ -6,5 +6,9 @@ module Types
     field :weather,
       resolver: Resolvers::WeatherResolver,
       description: 'Returns the weather for a specific location.'
+
+    field :radar_timestamps,
+      resolver: Resolvers::RadarTimestampsResolver,
+      description: 'Returns timestamps for the latest radar images.'
   end
 end
