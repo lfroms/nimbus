@@ -65,6 +65,7 @@ GEM
     byebug (11.1.2)
     coderay (1.1.2)
     concurrent-ruby (1.1.6)
+    connection_pool (2.2.2)
     crass (1.0.6)
     e2mmap (0.1.0)
     erubi (1.9.0)
@@ -111,6 +112,8 @@ GEM
     puma (4.3.3)
       nio4r (~> 2.0)
     rack (2.2.2)
+    rack-protection (2.0.8.1)
+      rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (6.0.2.2)
@@ -165,6 +168,11 @@ GEM
       rubocop (>= 0.72.0)
     ruby-progressbar (1.10.1)
     ruby_dep (1.5.0)
+    sidekiq (6.0.7)
+      connection_pool (>= 2.2.2)
+      rack (~> 2.0)
+      rack-protection (>= 2.0.0)
+      redis (>= 4.1.0)
     solargraph (0.38.6)
       backport (~> 1.1)
       benchmark
@@ -222,6 +230,7 @@ DEPENDENCIES
   rgeo-geojson (~> 2.1)
   rubocop (~> 0.82.0)
   rubocop-rails (~> 2.5)
+  sidekiq (~> 6.0)
   solargraph (~> 0.38.6)
   spring
   spring-watcher-listen (~> 2.0.0)
