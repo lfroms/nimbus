@@ -41,7 +41,7 @@ module Weather
           today = Time.zone.today
           yesterday = Time.zone.yesterday
 
-          starts_yesterday = forecast_issue_date.equal?(yesterday)
+          starts_yesterday = forecast_issue_date.beginning_of_day == yesterday
           start_date = starts_yesterday ? yesterday : today
 
           (start_date + index.day).to_time.to_i
