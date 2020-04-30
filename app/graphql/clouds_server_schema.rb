@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class OvercastServerSchema < GraphQL::Schema
+class CloudsServerSchema < GraphQL::Schema
   disable_introspection_entry_points if Rails.env.production?
 
   query(Types::QueryType)
