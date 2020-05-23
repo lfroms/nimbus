@@ -5,7 +5,7 @@ module Sites
       SITELIST_URL = 'https://collaboration.cmc.ec.gc.ca/cmc/cmos/public_doc/msc-data/citypage-weather/site_list_en.geojson'
 
       def execute(_)
-        CanadaSite.upsert_all(objects.compact)
+        WeatherStation.upsert_all(objects.compact)
       end
 
       private
@@ -34,7 +34,7 @@ module Sites
           }
 
           # Check to make sure the item we are adding is actually valid.
-          if CanadaSite.new(skip_uniqueness: true, **params).valid?
+          if WeatherStation.new(skip_uniqueness: true, **params).valid?
             params
           end
         end

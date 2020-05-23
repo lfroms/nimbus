@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'geocoder/stores/active_record'
 
-class CanadaSite < ApplicationRecord
+class WeatherStation < ApplicationRecord
   include Geocoder::Store::ActiveRecord
 
   # This attribute is only to be used when using the model to validate
