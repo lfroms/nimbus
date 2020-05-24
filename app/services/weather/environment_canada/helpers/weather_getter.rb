@@ -48,7 +48,7 @@ module Weather
         end
 
         def nearby_sites
-          @nearby_sites ||= WeatherStation.near(coordinate.to_a, 500).first(2) # Within 500km
+          @nearby_sites ||= WeatherStation.near(coordinate.to_a).first(2) # Within 500km
         end
 
         def closest_site
@@ -68,7 +68,7 @@ module Weather
         end
 
         def can_use_secondary?
-          closest_site.distance_from(coordinate.to_a) <= 30
+          closest_site.distance(coordinate.to_a) <= 30
         end
 
         def url_for_site(site)

@@ -43,13 +43,16 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # The ruby implementation of the GraphQL language.
 gem 'graphql', '~> 1.10'
 
+# PostGIS Adapter
+gem 'activerecord-postgis-adapter', '~> 6.0'
+
+# RGeo
+gem 'rgeo', '~> 2.1'
+gem 'rgeo-shapefile', '~> 2.0'
+gem 'rgeo-geojson', '~> 2.1'
+
 gem 'nokogiri', '~> 1.10'
 gem 'typhoeus', '~> 1.3'
-gem 'geocoder', '~> 1.6'
-gem 'rgeo-geojson', '~> 2.1'
 gem 'redis', '~> 4.1'
 gem 'sidekiq', '~> 6.0'
 gem 'bugsnag', '~> 6.13'
-gem 'activerecord-postgis-adapter', '~> 6.0'
-gem 'rgeo', '~> 2.1'
-gem 'rgeo-shapefile', '~> 2.0'
