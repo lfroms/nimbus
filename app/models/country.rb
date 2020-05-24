@@ -1,14 +1,8 @@
 # frozen_string_literal: true
-require 'geocoder/stores/active_record'
-
 class Country < ApplicationRecord
-  include Geocoder::Store::ActiveRecord
-
   # This attribute is only to be used when using the model to validate
   # a set of input parameters, typically when doing #upsert_all.
   attr_accessor :skip_uniqueness
-
-  self.primary_key = :fips
 
   validates :name, presence: true
   validates :fips, presence: true, length: { is: 2 }
@@ -16,13 +10,10 @@ class Country < ApplicationRecord
   validates :iso2, presence: true, length: { is: 2 }
   validates :iso3, presence: true, length: { is: 3 }
   validates :un, presence: true
-  validates :latitude, presence: true
-  validates :longitude, presence: true
+  validates :location, presence: true
   validates :shape, presence: true
 
-  def self.geocoder_options
-    { latitude: :latitude, longitude: :longitude }
-  end
+  has_many :weather_stations, dependent: :destroy
 
   scope :nearest_to_point, -> (latitude, longitude) {
     lat = latitude.to_f.to_s

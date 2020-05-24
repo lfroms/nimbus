@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 module Countries
   class CountrySyncService < UseCaseService
-    def execute
+    def execute(_)
       Country.upsert_all(valid_objects)
     end
 
@@ -32,14 +32,17 @@ module Countries
         # https://github.com/rails/rails/issues/35493
         now = Time.zone.now
 
+        latitude = feature['LAT']
+        longitude = feature['LON']
+        point = "POINT(#{longitude} #{latitude})"
+
         params = {
           name: feature['NAME'],
           fips: feature['FIPS'],
           iso2: feature['ISO2'],
           iso3: feature['ISO3'],
           un: feature['UN'],
-          latitude: feature['LAT'],
-          longitude: feature['LON'],
+          location: point,
           shape: feature.geometry,
           updated_at: now,
         }
