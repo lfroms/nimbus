@@ -21,4 +21,8 @@ class NimbusServerSchema < GraphQL::Schema
   rescue_from(Weather::Errors::NoSitesError) do |_err, _obj, _args, _ctx, _field|
     raise GraphQL::ExecutionError, 'There are no weather stations within 500 kilometers of this location.'
   end
+
+  rescue_from(Weather::Errors::UnsupportedLocationError) do |_err, _obj, _args, _ctx, _field|
+    raise GraphQL::ExecutionError, 'Weather information for this location is not yet available.'
+  end
 end

@@ -75,6 +75,7 @@ test:
 #
 production:
   <<: *default
+  url: <%= ENV.fetch('DATABASE_URL', '').sub(/^postgres/, "postgis") %>
   database: nimbus_server_production
   username: nimbus_server
   password: <%= ENV['nimbus_server_DATABASE_PASSWORD'] %>

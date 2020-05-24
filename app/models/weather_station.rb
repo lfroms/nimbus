@@ -1,28 +1,31 @@
 # frozen_string_literal: true
-require 'geocoder/stores/active_record'
-
 class WeatherStation < ApplicationRecord
-  include Geocoder::Store::ActiveRecord
-
-  # This attribute is only to be used when using the model to validate
-  # a set of input parameters, typically when doing #upsert_all.
-  attr_accessor :skip_uniqueness
-
-  self.primary_key = :code
-
-  validates :name, presence: false
   validates :code, presence: true
-  validates :code, uniqueness: true, unless: :skip_uniqueness
-  validates :province, presence: true, length: { in: 2..3 }
-  validates :latitude, presence: true
-  validates :longitude, presence: true
+  validates :name, presence: false
+  validates :province, presence: true
+  validates :location, presence: false
 
-  def self.geocoder_options
-    { latitude: :latitude, longitude: :longitude }
-  end
+  belongs_to :country
+
+  scope :near, -> (coordinates) {
+    latitude, longitude = coordinates
+
+    lat = latitude.to_f.to_s
+    lon = longitude.to_f.to_s
+
+    # WARNING: Make sure that lat and lon are sanitized before passing this query!
+    query = Arel.sql("ST_Distance(location, ST_SetSRID(ST_MakePoint(#{lon},#{lat}),4326)) ASC")
+    order(query)
+  }
 
   def coordinate
-    latitude, longitude = to_coordinates
-    Weather::Types::Coordinate.new(latitude: latitude, longitude: longitude)
+    Weather::Types::Coordinate.new(latitude: location.y, longitude: location.x)
+  end
+
+  def distance(coordinates)
+    latitude, longitude = coordinates
+    point = RGeo::Geographic.spherical_factory(srid: 4326).point(longitude, latitude)
+
+    point.distance(location) / 1000
   end
 end
