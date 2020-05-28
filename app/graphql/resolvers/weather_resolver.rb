@@ -13,6 +13,8 @@ module Resolvers
       case country.fips
       when 'CA'
         Weather::EnvironmentCanada::Base.new(coordinate: coordinate)
+      when 'US'
+        Weather::NationalWeatherService::Base.new(coordinate: coordinate)
       else
         raise Weather::Errors::UnsupportedLocationError
       end
