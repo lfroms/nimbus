@@ -5,7 +5,7 @@ module Sites
       SITELIST_URL = 'https://collaboration.cmc.ec.gc.ca/cmc/cmos/public_doc/msc-data/citypage-weather/site_list_en.geojson'
 
       def execute(_)
-        CanadaSite.upsert_all(objects.compact)
+        CanadaSite.upsert_all(objects.compact) # rubocop:disable Rails/SkipsModelValidations
       end
 
       private

@@ -6,6 +6,7 @@ module Weather
         attr :code
 
         def initialize(code:)
+          super
           @code = code
         end
 
