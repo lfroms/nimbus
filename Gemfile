@@ -43,7 +43,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # The ruby implementation of the GraphQL language.
 gem 'graphql', '~> 1.10'
 
-gem 'nokogiri', '~> 1.10'
+gem 'nokogiri', '~> 1.11'
 gem 'typhoeus', '~> 1.3'
 gem 'geocoder', '~> 1.6'
 gem 'rgeo-geojson', '~> 2.1'
