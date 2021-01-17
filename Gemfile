@@ -23,6 +23,9 @@ gem 'bootsnap', '>= 1.4.2', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+
+  gem 'rubocop', '~> 1.2'
+  gem 'rubocop-rails', '~> 2.8'
 end
 
 group :development do
@@ -31,9 +34,6 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 
-  gem 'rubocop', '~> 0.82.0'
-  gem 'rubocop-rails', '~> 2.5'
-  gem 'solargraph', '~> 0.38.6'
   gem 'pry-rails', '~> 0.3.9'
 end
 
