@@ -5,32 +5,37 @@ require:
   - rubocop-rails
 
 AllCops:
-  TargetRubyVersion: 2.6.3
+  TargetRubyVersion: 2.7.2
+  NewCops: enable
   Include:
-    - "**/*.rb"
-    - "**/*.gemfile"
-    - "**/*.gemspec"
-    - "**/*.rake"
-    - "**/*.ru"
-    - "**/*.ruby"
-    - "**/*.spec"
-    - "**/*.thor"
-    - "**/.irbrc"
-    - "**/.pryrc"
-    - "**/Gemfile"
-    - "**/Rakefile"
+    - '**/*.rb'
+    - '**/*.gemfile'
+    - '**/*.gemspec'
+    - '**/*.rake'
+    - '**/*.ru'
+    - '**/*.ruby'
+    - '**/*.spec'
+    - '**/*.thor'
+    - '**/.irbrc'
+    - '**/.pryrc'
+    - '**/Gemfile'
+    - '**/Rakefile'
   Exclude:
-    - ".git/**/*"
-    - "bin/*"
-    - "db/**/*"
-    - "node_modules/**/*"
-    - "tmp/**/*"
-    - "vendor/**/*"
+    - '.git/**/*'
+    - 'bin/*'
+    - 'db/seeds.rb'
+    - 'db/schema.rb'
+    - 'node_modules/**/*'
+    - 'tmp/**/*'
+    - 'vendor/**/*'
 
 Layout/EmptyLineAfterMagicComment:
   Enabled: false
 
 Rails:
+  Enabled: true
+
+Layout/LineLength:
   Enabled: true
 
 Style/Documentation:

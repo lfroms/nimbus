@@ -6,6 +6,7 @@ module Weather
         attr :forecast_group
 
         def initialize(forecast_group:)
+          super
           @forecast_group = forecast_group
         end
 
