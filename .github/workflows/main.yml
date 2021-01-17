@@ -43,7 +43,7 @@ jobs:
           bundle install --jobs 4 --retry 3
 
       - name: Install PostgreSQL 13 client
-        run: sudo apt-get -yqq install libpq-dev
+        run: sudo apt-get -yqq install libpq-dev postgis postgresql-client-13 postgresql-13-postgis-3 postgresql-13-postgis-3-scripts
 
       - name: Rails tests
         env:
