@@ -6,7 +6,7 @@ module Weather
         attr :location, :current_conditions, :station_coordinate
 
         def initialize(location:, current_conditions:, station_coordinate:)
-          super
+          super()
           @location = location
           @current_conditions = current_conditions
           @station_coordinate = station_coordinate

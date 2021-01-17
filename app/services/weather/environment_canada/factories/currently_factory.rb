@@ -6,7 +6,7 @@ module Weather
         attr :current_conditions
 
         def initialize(current_conditions:)
-          super
+          super()
           @current_conditions = current_conditions
         end
 
