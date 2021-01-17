@@ -6,7 +6,7 @@ module Weather
         attr :warnings
 
         def initialize(warnings:)
-          super
+          super()
           @warnings = warnings
         end
 
