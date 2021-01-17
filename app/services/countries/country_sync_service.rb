@@ -2,7 +2,7 @@
 module Countries
   class CountrySyncService < UseCaseService
     def execute(_)
-      Country.upsert_all(valid_objects)
+      Country.upsert_all(valid_objects) # rubocop:disable Rails/SkipsModelValidations
     end
 
     private

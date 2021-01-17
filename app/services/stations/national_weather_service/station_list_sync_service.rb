@@ -5,7 +5,7 @@ module Stations
       STATION_LIST_URL = 'https://api.weather.gov/stations'
 
       def execute(_)
-        country.weather_stations.upsert_all(objects.compact, unique_by: :code)
+        country.weather_stations.upsert_all(objects.compact, unique_by: :code) # rubocop:disable Rails/SkipsModelValidations, Layout/LineLength
       end
 
       private
