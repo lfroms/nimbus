@@ -13,9 +13,6 @@ module Radar
           time += interval
         end
 
-        # Last radar image usually isn't ready on time.
-        output.pop
-
         output
       end
 
