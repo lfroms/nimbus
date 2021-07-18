@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-18.04
     services:
       db:
-        image: postgres:13
+        image: postgis/postgis:13-3.1
         ports: ["5432:5432"]
         env:
           POSTGRES_PASSWORD: password
@@ -42,6 +42,7 @@ jobs:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           DISABLE_SPRING: 1
         run: |
+          bundle exec rails db:gis:setup
           bundle exec rails db:create
           bundle exec rails db:schema:load
           bundle exec rails test
