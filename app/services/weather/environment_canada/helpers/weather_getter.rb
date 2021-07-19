@@ -48,7 +48,10 @@ module Weather
         end
 
         def nearby_sites
-          @nearby_sites ||= CanadaSite.near(coordinate.to_a, 500).first(2) # Within 500km
+          @nearby_sites ||= WeatherStation
+            .within(radius: 500_000, of: coordinate.to_a)
+            .select(:code, :province, :location) # Within 500km
+            .first(2)
         end
 
         def closest_site
