@@ -71,7 +71,7 @@ module Weather
         end
 
         def can_use_secondary?
-          closest_site.distance_from(coordinate.to_a) <= 30
+          closest_site.distance(coordinate.to_a) <= 30
         end
 
         def url_for_site(site)
