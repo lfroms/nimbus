@@ -173,6 +173,8 @@ GEM
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 0.90.0, < 2.0)
+    rubocop-shopify (2.1.0)
+      rubocop (~> 1.13)
     ruby-progressbar (1.11.0)
     ruby_dep (1.5.0)
     sidekiq (6.2.1)
@@ -224,6 +226,7 @@ DEPENDENCIES
   rgeo-shapefile (~> 2.0)
   rubocop (~> 1.2)
   rubocop-rails (~> 2.8)
+  rubocop-shopify (~> 2.1)
   sidekiq (~> 6.0)
   spring
   spring-watcher-listen (~> 2.0.0)
