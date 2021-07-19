@@ -13,7 +13,7 @@ class Country < ApplicationRecord
   validates :location, presence: true
   validates :shape, presence: true
 
-  # has_many :weather_stations, dependent: :destroy
+  has_many :weather_stations, dependent: :destroy
 
   scope :nearest, -> (to:) {
     latitude, longitude = to
