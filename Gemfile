@@ -57,3 +57,5 @@ gem 'geocoder', '~> 1.6'
 gem 'redis', '~> 4.1'
 gem 'sidekiq', '~> 6.0'
 gem 'bugsnag', '~> 6.13'
+
+gem 'rubocop-shopify', '~> 2.1', require: false

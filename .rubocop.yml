@@ -1,5 +1,5 @@
-inherit_from:
-  - http://shopify.github.io/ruby-style-guide/rubocop.yml
+inherit_gem:
+  rubocop-shopify: rubocop.yml
 
 require:
   - rubocop-rails
@@ -8,26 +8,26 @@ AllCops:
   TargetRubyVersion: 2.7.2
   NewCops: enable
   Include:
-    - '**/*.rb'
-    - '**/*.gemfile'
-    - '**/*.gemspec'
-    - '**/*.rake'
-    - '**/*.ru'
-    - '**/*.ruby'
-    - '**/*.spec'
-    - '**/*.thor'
-    - '**/.irbrc'
-    - '**/.pryrc'
-    - '**/Gemfile'
-    - '**/Rakefile'
+    - "**/*.rb"
+    - "**/*.gemfile"
+    - "**/*.gemspec"
+    - "**/*.rake"
+    - "**/*.ru"
+    - "**/*.ruby"
+    - "**/*.spec"
+    - "**/*.thor"
+    - "**/.irbrc"
+    - "**/.pryrc"
+    - "**/Gemfile"
+    - "**/Rakefile"
   Exclude:
-    - '.git/**/*'
-    - 'bin/*'
-    - 'db/seeds.rb'
-    - 'db/schema.rb'
-    - 'node_modules/**/*'
-    - 'tmp/**/*'
-    - 'vendor/**/*'
+    - ".git/**/*"
+    - "bin/*"
+    - "db/seeds.rb"
+    - "db/schema.rb"
+    - "node_modules/**/*"
+    - "tmp/**/*"
+    - "vendor/**/*"
 
 Layout/EmptyLineAfterMagicComment:
   Enabled: false
@@ -42,7 +42,7 @@ Style/Documentation:
   Enabled: false
 
 Style/StringLiterals:
-  Enabled: true
+  EnforcedStyle: single_quotes
 
 Style/HashEachMethods:
   Enabled: true
