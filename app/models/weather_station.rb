@@ -14,9 +14,10 @@ class WeatherStation < ApplicationRecord
     sanitized_longitude = longitude.to_f.to_s
 
     # WARNING: Make sure that sanitized_latitude and sanitized_longitude are sanitized before passing this query!
-    distance_query = Arel.sql("ST_Distance(location, ST_SetSRID(ST_MakePoint(#{sanitized_longitude},#{sanitized_latitude}), #{SRID})) ASC")
+    point = "ST_SetSRID(ST_MakePoint(#{sanitized_longitude},#{sanitized_latitude}), #{SRID})"
+    distance_query = Arel.sql("ST_Distance(location, #{point}) ASC")
 
-    where('ST_DWithin(location, ST_SetSRID(ST_MakePoint(?, ?), ?), ?)', longitude, latitude, SRID, radius)
+    where("ST_DWithin(location, #{point}, ?)", radius)
       .order(distance_query)
   }
 

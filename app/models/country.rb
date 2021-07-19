@@ -22,7 +22,8 @@ class Country < ApplicationRecord
     sanitized_longitude = longitude.to_f.to_s
 
     # WARNING: Make sure that lat and lon are sanitized before passing this query!
-    query = Arel.sql("ST_Distance(shape, ST_SetSRID(ST_MakePoint(#{sanitized_longitude}, #{sanitized_latitude}), #{SRID})) ASC")
+    point = "ST_MakePoint(#{sanitized_longitude}, #{sanitized_latitude})"
+    query = Arel.sql("ST_Distance(shape, ST_SetSRID(#{point}, #{SRID})) ASC")
     order(query)
   }
 end
