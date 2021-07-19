@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_23_174152) do
+ActiveRecord::Schema.define(version: 2020_05_16_013559) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,21 @@ ActiveRecord::Schema.define(version: 2020_04_23_174152) do
     t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.index ["code"], name: "index_canada_sites_on_code", unique: true
     t.index ["latitude", "longitude"], name: "index_canada_sites_on_latitude_and_longitude"
+  end
+
+  create_table "countries", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "fips", null: false
+    t.string "iso2", null: false
+    t.string "iso3", null: false
+    t.integer "un", null: false
+    t.geography "location", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
+    t.geometry "shape", limit: {:srid=>4326, :type=>"multi_polygon"}, null: false
+    t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.index ["fips"], name: "index_countries_on_fips", unique: true
+    t.index ["location"], name: "index_countries_on_location", using: :gist
+    t.index ["shape"], name: "index_countries_on_shape", using: :gist
   end
 
 end
