@@ -53,7 +53,6 @@ gem 'rgeo-geojson', '~> 2.1'
 
 gem 'nokogiri', '~> 1.11'
 gem 'typhoeus', '~> 1.3'
-gem 'geocoder', '~> 1.6'
 gem 'redis', '~> 4.1'
 gem 'sidekiq', '~> 6.0'
 gem 'bugsnag', '~> 6.13'

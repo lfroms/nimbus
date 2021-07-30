@@ -75,7 +75,7 @@ Then, load the weather regions:
 rails c
 ```
 ```ruby
-Sites::EnvironmentCanada::SiteListSyncService.execute
+Stations::EnvironmentCanada::StationListSyncService.execute
 ```
 
 Finally, you can start the server:

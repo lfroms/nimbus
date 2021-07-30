@@ -75,7 +75,6 @@ GEM
     ethon (0.13.0)
       ffi (>= 1.15.0)
     ffi (1.15.0)
-    geocoder (1.6.7)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     graphql (1.12.8)
@@ -212,7 +211,6 @@ DEPENDENCIES
   bootsnap (>= 1.4.2)
   bugsnag (~> 6.13)
   byebug
-  geocoder (~> 1.6)
   graphql (~> 1.10)
   listen (>= 3.0.5, < 3.2)
   nokogiri (~> 1.11)
