@@ -51,7 +51,7 @@ gem 'rgeo', '~> 2.3'
 gem 'rgeo-shapefile', '~> 2.0'
 gem 'rgeo-geojson', '~> 2.1'
 
-gem 'nokogiri', '~> 1.11'
+gem 'nokogiri', '~> 1.12'
 gem 'typhoeus', '~> 1.3'
 gem 'redis', '~> 4.1'
 gem 'sidekiq', '~> 6.0'
