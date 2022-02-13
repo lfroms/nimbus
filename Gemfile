@@ -54,7 +54,7 @@ gem 'rgeo-geojson', '~> 2.1'
 gem 'nokogiri', '~> 1.12'
 gem 'typhoeus', '~> 1.3'
 gem 'redis', '~> 4.1'
-gem 'sidekiq', '~> 6.0'
+gem 'sidekiq', '~> 6.4'
 gem 'bugsnag', '~> 6.13'
 
 gem 'rubocop-shopify', '~> 2.1', require: false
