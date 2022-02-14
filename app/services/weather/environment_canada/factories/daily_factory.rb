@@ -14,8 +14,6 @@ module Weather
           input = forecasts
           return [] if @forecast_group.nil? || input.nil? || input.empty?
 
-          start_date = forecast_start_date(first_forecast: input.first)
-
           # Day condition should be nil if first item is night.
           input.unshift(nil) if night?(input.first)
 
@@ -23,7 +21,7 @@ module Weather
             day, night = pair
 
             Types::Daily.new(
-              time: time(index: index, start_date: start_date),
+              time: time(index: index),
               daytime_conditions: half_day_condition(forecast: day),
               nighttime_conditions: half_day_condition(forecast: night)
             )
@@ -36,12 +34,17 @@ module Weather
           @forecast_group&.xpath('forecast')&.to_a
         end
 
-        def forecast_start_date(first_forecast:)
-          period_name = first_forecast.xpath('period').first&.content
-          nearest_day(period_name: period_name)
+        def forecast_issue_date
+          @forecast_group.xpath("dateTime[@name='forecastIssue' and @zone='UTC']/timeStamp").first&.content&.to_date
         end
 
-        def time(index:, start_date:)
+        def time(index:)
+          today = Time.zone.today
+          yesterday = Time.zone.yesterday
+
+          starts_yesterday = forecast_issue_date.beginning_of_day == yesterday
+          start_date = starts_yesterday ? yesterday : today
+
           (start_date + index.day).to_time.to_i
         end
 
@@ -92,15 +95,6 @@ module Weather
 
         def night?(forecast)
           forecast.xpath("period[contains(text(), 'night')]").present?
-        end
-
-        def nearest_day(period_name:)
-          today = Time.zone.today
-
-          interval = Date.parse(period_name).cwday - today.cwday
-          offset = interval.abs < 4 ? interval : 7 - interval.abs
-
-          today + offset.days
         end
       end
     end
