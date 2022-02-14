@@ -14,6 +14,8 @@ module Weather
           input = forecasts
           return [] if @forecast_group.nil? || input.nil? || input.empty?
 
+          start_date = forecast_start_date(first_forecast: input.first)
+
           # Day condition should be nil if first item is night.
           input.unshift(nil) if night?(input.first)
 
@@ -21,7 +23,7 @@ module Weather
             day, night = pair
 
             Types::Daily.new(
-              time: time(index: index),
+              time: time(index: index, start_date: start_date),
               daytime_conditions: half_day_condition(forecast: day),
               nighttime_conditions: half_day_condition(forecast: night)
             )
@@ -34,17 +36,12 @@ module Weather
           @forecast_group&.xpath('forecast')&.to_a
         end
 
-        def forecast_issue_date
-          @forecast_group.xpath("dateTime[@name='forecastIssue' and @zone='UTC']/timeStamp").first&.content&.to_date
+        def forecast_start_date(first_forecast:)
+          period_name = first_forecast.xpath('period').first&.content
+          nearest_day(period_name: period_name)
         end
 
-        def time(index:)
-          today = Time.zone.today
-          yesterday = Time.zone.yesterday
-
-          starts_yesterday = forecast_issue_date.beginning_of_day == yesterday
-          start_date = starts_yesterday ? yesterday : today
-
+        def time(index:, start_date:)
           (start_date + index.day).to_time.to_i
         end
 
@@ -95,6 +92,35 @@ module Weather
 
         def night?(forecast)
           forecast.xpath("period[contains(text(), 'night')]").present?
+        end
+
+        def nearest_day(period_name:)
+          today = Time.zone.today
+          period_wday = weekday_index(period_name)
+
+          return today if period_wday == today.wday
+
+          weekday_name = symbol_for(weekday_index: period_wday)
+          next_weekday = Date.current.next_occurring(weekday_name)
+          previous_weekday = Date.current.prev_occurring(weekday_name)
+
+          if days_between(today, next_weekday) < days_between(today, previous_weekday)
+            next_weekday
+          else
+            previous_weekday
+          end
+        end
+
+        def weekday_index(string)
+          Date.parse(string).wday
+        end
+
+        def symbol_for(weekday_index:)
+          Date::DAYNAMES[weekday_index].downcase.to_sym
+        end
+
+        def days_between(first_date, second_date)
+          (first_date - second_date).abs.to_i
         end
       end
     end
